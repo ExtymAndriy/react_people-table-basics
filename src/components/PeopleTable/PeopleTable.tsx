@@ -12,68 +12,75 @@ export const PeopleTable: React.FC<Props> = ({
   people,
   selectedPerson,
   onPersonSelect,
-}) => (
-  <div className="block">
-    <div className="box table-container">
-      <table
-        data-cy="peopleTable"
-        className="table is-striped is-hoverable is-narrow is-fullwidth"
-      >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>Born</th>
-            <th>Died</th>
-            <th>Mother</th>
-            <th>Father</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {people.map(person => (
-            <tr
-              key={person.slug}
-              data-cy="person"
-              className={
-                selectedPerson?.slug === person.slug
-                  ? 'has-background-warning'
-                  : ''
-              }
-              onClick={() => onPersonSelect(person)}
-            >
-              <td>
-                <PersonLink person={person} />
-              </td>
-              <td>{person.sex}</td>
-              <td>{person.born}</td>
-              <td>{person.died}</td>
-              <td>
-                {person.motherName ? (
-                  <PersonLink
-                    person={
-                      people.find(p => p.name === person.motherName) || null
-                    }
-                  />
-                ) : (
-                  '-'
-                )}
-              </td>
-              <td>
-                {person.fatherName ? (
-                  <PersonLink
-                    person={
-                      people.find(p => p.name === person.fatherName) || null
-                    }
-                  />
-                ) : (
-                  '-'
-                )}
-              </td>
+}) => {
+  return (
+    <div className="block">
+      <div className="box table-container">
+        <table
+          data-cy="peopleTable"
+          className="table is-striped is-hoverable is-narrow is-fullwidth"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Sex</th>
+              <th>Born</th>
+              <th>Died</th>
+              <th>Mother</th>
+              <th>Father</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {people.map(person => {
+              const mother = people.find(p => p.name === person.motherName);
+
+              const father = people.find(p => p.name === person.fatherName);
+
+              const isSelected = selectedPerson?.slug === person.slug;
+
+              return (
+                <tr
+                  key={person.slug}
+                  className={isSelected ? 'has-background-warning' : ''}
+                >
+                  <td data-cy="person" onClick={() => onPersonSelect(person)}>
+                    <PersonLink person={person} />
+                  </td>
+
+                  <td>{person.sex}</td>
+                  <td>{person.born}</td>
+                  <td>{person.died}</td>
+
+                  <td>
+                    {person.motherName ? (
+                      mother ? (
+                        <PersonLink person={mother} />
+                      ) : (
+                        <span>{person.motherName}</span>
+                      )
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+
+                  <td>
+                    {person.fatherName ? (
+                      father ? (
+                        <PersonLink person={father} />
+                      ) : (
+                        <span>{person.fatherName}</span>
+                      )
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-);
+  );
+};

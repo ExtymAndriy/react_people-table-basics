@@ -15,6 +15,7 @@ export const PersonLink: React.FC<Props> = ({ person }) => {
     <Link
       to={`/people/${person.slug}`}
       className={person.sex === 'f' ? 'has-text-danger' : ''}
+      onClick={e => e.stopPropagation()}
     >
       {person.name}
     </Link>
