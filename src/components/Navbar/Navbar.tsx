@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link, useLocation, useMatch } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
-  const location = useLocation();
   const match1 = useMatch('/people/*');
   const match2 = useMatch('/people');
   const isPeoplePage = match1 || match2;
@@ -16,12 +15,7 @@ export const Navbar: React.FC = () => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link
-            to="/"
-            className={`navbar-item ${
-              location.pathname === '/' ? 'has-background-grey-lighter' : ''
-            }`}
-          >
+          <Link to="/" className="navbar-item">
             Home
           </Link>
 
