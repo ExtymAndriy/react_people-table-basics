@@ -86,3 +86,4 @@ export const PeopleTable: React.FC<Props> = ({
     </div>
   );
 };
+
