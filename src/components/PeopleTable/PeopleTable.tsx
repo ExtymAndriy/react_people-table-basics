@@ -42,9 +42,11 @@ export const PeopleTable: React.FC<Props> = ({
               return (
                 <tr
                   key={person.slug}
+                  data-cy="person"
                   className={isSelected ? 'has-background-warning' : ''}
+                  onClick={() => onPersonSelect(person)}
                 >
-                  <td data-cy="person" onClick={() => onPersonSelect(person)}>
+                  <td>
                     <PersonLink person={person} />
                   </td>
 
