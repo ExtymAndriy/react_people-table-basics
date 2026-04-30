@@ -2,9 +2,12 @@ import React from 'react';
 import { Link, useMatch } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
-  const match1 = useMatch('/people/*');
-  const match2 = useMatch('/people');
-  const isPeoplePage = match1 || match2;
+  const homeMatch = useMatch({ path: '/', end: true });
+  const peopleMatch1 = useMatch('/people/*');
+  const peopleMatch2 = useMatch('/people');
+
+  const isHomePage = Boolean(homeMatch);
+  const isPeoplePage = Boolean(peopleMatch1 || peopleMatch2);
 
   return (
     <nav
@@ -15,15 +18,16 @@ export const Navbar: React.FC = () => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item">
+          <Link
+            to="/"
+            className={`navbar-item ${isHomePage ? 'has-background-grey-lighter' : ''}`}
+          >
             Home
           </Link>
 
           <Link
             to="/people"
-            className={`navbar-item ${
-              isPeoplePage ? 'has-background-grey-lighter' : ''
-            }`}
+            className={`navbar-item ${isPeoplePage ? 'has-background-grey-lighter' : ''}`}
           >
             People
           </Link>
